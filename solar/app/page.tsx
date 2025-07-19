@@ -187,7 +187,7 @@ export default function Home() {
                     <span className="text-xl font-bold text-yellow-500">C</span>
                   </div>
                   <div>
-                    <h4 className="font-bold">Chị Ngọc</h4>
+                    <h4 className="font-bold">Anh Duy</h4>
                     <p className="text-sm text-gray-500">Chủ nhà trọ Q.7</p>
                   </div>
                 </div>
@@ -209,7 +209,7 @@ export default function Home() {
                     <span className="text-xl font-bold text-yellow-500">A</span>
                   </div>
                   <div>
-                    <h4 className="font-bold">Anh Tuấn</h4>
+                    <h4 className="font-bold">Anh Tâm</h4>
                     <p className="text-sm text-gray-500">Chủ nhà trọ Q.Bình Thạnh</p>
                   </div>
                 </div>
