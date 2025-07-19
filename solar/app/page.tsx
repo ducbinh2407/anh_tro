@@ -135,7 +135,7 @@ export default function Home() {
 
               <div className="relative rounded-2xl overflow-hidden shadow-xl border-4 border-white dark:border-gray-800">
                 <Image
-                  src="/hostel.jpg"
+                  src="/images/hostel.jpg"
                   alt="Hostel with solar panels"
                   width={600}
                   height={400}
