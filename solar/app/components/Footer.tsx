@@ -12,8 +12,8 @@ export default function Footer() {
           <div className="flex flex-col">
             <h4 className="font-bold mb-2">Liên hệ</h4>
             <p>Email: info@anhtro.vn</p>
-            <p>Điện thoại: 0123 456 789</p>
-            <p>Địa chỉ: TP.Hồ Chí Minh, Việt Nam</p>
+            <p>Điện thoại: 0908021631</p>
+            <p>Địa chỉ: 153 Nguyễn Chí Thanh, Phường An Đông, TP.HCM</p>
           </div>
         </div>
 
