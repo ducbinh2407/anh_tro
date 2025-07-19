@@ -8,7 +8,7 @@ export default function Navbar() {
       <div className="container mx-auto flex justify-between items-center">
         <Link href="/" className="flex items-center">
           <Image
-            src="/logo.png"
+            src="/images/logo.png"
             alt="Ánh Trọ Logo"
             width={40}
             height={40}

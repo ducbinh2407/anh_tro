@@ -44,7 +44,7 @@ export default function Home() {
             </div>
             <div className="mt-16 rounded-2xl overflow-hidden shadow-2xl max-w-5xl mx-auto border-4 border-white dark:border-gray-800">
               <Image
-                src="/hostel.jpg"
+                src="/images/hostel.jpg"
                 alt="Solar panels on hostel roof"
                 width={1200}
                 height={600}
