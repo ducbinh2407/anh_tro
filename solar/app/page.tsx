@@ -276,7 +276,7 @@ export default function Home() {
                     </div>
                     <div>
                       <h4 className="font-semibold text-gray-900 dark:text-white">Điện thoại</h4>
-                      <p className="text-gray-600 dark:text-gray-400">0901 234 567</p>
+                      <p className="text-gray-600 dark:text-gray-400">0908021631</p>
                     </div>
                   </div>
 
@@ -301,7 +301,7 @@ export default function Home() {
                     </div>
                     <div>
                       <h4 className="font-semibold text-gray-900 dark:text-white">Địa chỉ</h4>
-                      <p className="text-gray-600 dark:text-gray-400">123 Nguyễn Văn Linh, Quận 7, TP.HCM</p>
+                      <p className="text-gray-600 dark:text-gray-400">153 Nguyễn Chí Thanh, Phường An Đông, TP.HCM</p>
                     </div>
                   </div>
                 </div>
