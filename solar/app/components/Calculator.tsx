@@ -5,82 +5,16 @@ import { useState } from 'react'
 
 export default function Calculator() {
   const [kWh, setKWh] = useState<string>('')
-  const [result, setResult] = useState<number | null>(null)
-  const [solarResult, setSolarResult] = useState<number | null>(null)
+  const [evnCostPerPerson, setEvnCostPerPerson] = useState<number | null>(null)
+  const [anhTrogCostPerPerson, setAnhTrogCostPerPerson] = useState<number | null>(null)
+  const [savings, setSavings] = useState<number | null>(null)
   const [error, setError] = useState<string>('')
-
-  const calculateElectricityCost = (tong_kWh: number): number => {
-    // Constants
-    const SO_HO = 2
-    const THUE_VAT = 0.08
-    const GIA_BAC_1 = 1984
-    const GIA_BAC_2 = 2050
-    const GIA_BAC_3 = 2380
-    const GIA_BAC_4 = 2998
-    const GIA_BAC_5 = 3350
-    const GIA_BAC_6 = 3460
-    const DINH_MUC_BAC_1 = 50
-    const DINH_MUC_BAC_2 = 50
-    const DINH_MUC_BAC_3 = 100
-    const DINH_MUC_BAC_4 = 100
-    const DINH_MUC_BAC_5 = 100
-
-    // Calculate thresholds
-    const dm_bac_1 = DINH_MUC_BAC_1 * SO_HO
-    const dm_bac_2 = DINH_MUC_BAC_2 * SO_HO
-    const dm_bac_3 = DINH_MUC_BAC_3 * SO_HO
-    const dm_bac_4 = DINH_MUC_BAC_4 * SO_HO
-    const dm_bac_5 = DINH_MUC_BAC_5 * SO_HO
-
-    const moc_1 = dm_bac_1
-    const moc_2 = moc_1 + dm_bac_2
-    const moc_3 = moc_2 + dm_bac_3
-    const moc_4 = moc_3 + dm_bac_4
-    const moc_5 = moc_4 + dm_bac_5
-
-    // Calculate progressive cost
-    let tien_truoc_thue = 0
-
-    if (tong_kWh <= moc_1) {
-      tien_truoc_thue = tong_kWh * GIA_BAC_1
-    } else if (tong_kWh <= moc_2) {
-      tien_truoc_thue = moc_1 * GIA_BAC_1 + (tong_kWh - moc_1) * GIA_BAC_2
-    } else if (tong_kWh <= moc_3) {
-      tien_truoc_thue =
-        moc_1 * GIA_BAC_1 +
-        dm_bac_2 * GIA_BAC_2 +
-        (tong_kWh - moc_2) * GIA_BAC_3
-    } else if (tong_kWh <= moc_4) {
-      tien_truoc_thue =
-        moc_1 * GIA_BAC_1 +
-        dm_bac_2 * GIA_BAC_2 +
-        dm_bac_3 * GIA_BAC_3 +
-        (tong_kWh - moc_3) * GIA_BAC_4
-    } else if (tong_kWh <= moc_5) {
-      tien_truoc_thue =
-        moc_1 * GIA_BAC_1 +
-        dm_bac_2 * GIA_BAC_2 +
-        dm_bac_3 * GIA_BAC_3 +
-        dm_bac_4 * GIA_BAC_4 +
-        (tong_kWh - moc_4) * GIA_BAC_5
-    } else {
-      tien_truoc_thue =
-        moc_1 * GIA_BAC_1 +
-        dm_bac_2 * GIA_BAC_2 +
-        dm_bac_3 * GIA_BAC_3 +
-        dm_bac_4 * GIA_BAC_4 +
-        dm_bac_5 * GIA_BAC_5 +
-        (tong_kWh - moc_5) * GIA_BAC_6
-    }
-
-    // Calculate total with VAT
-    return tien_truoc_thue * (1 + THUE_VAT)
-  }
 
   const handleCalculate = () => {
     setError('')
-    setResult(null)
-    setSolarResult(null)
+    setEvnCostPerPerson(null)
+    setAnhTrogCostPerPerson(null)
+    setSavings(null)
 
     if (!kWh) {
       setError('Vui lòng nhập số kWh')
@@ -98,13 +32,16 @@ export default function Calculator() {
       return
     }
 
-    // Calculate EVN cost
-    const evnCost = calculateElectricityCost(kWhNumber)
-    setResult(evnCost)
+    // Calculate EVN cost per person: (input/8)*3500
+    const evnCost = (kWhNumber / 8) * 3500
+    setEvnCostPerPerson(evnCost)
 
-    // Calculate solar cost (fixed 3500 VND per kWh)
-    const solarCost = kWhNumber * 3500
-    setSolarResult(solarCost)
+    // Calculate Ánh Trọ cost per person: (input/8)*3000
+    const anhTrogCost = (kWhNumber / 8) * 3000
+    setAnhTrogCostPerPerson(anhTrogCost)
+
+    // Calculate savings
+    setSavings(evnCost - anhTrogCost)
   }
 
   return (
@@ -124,42 +61,60 @@ export default function Calculator() {
           onChange={(e) => setKWh(e.target.value)}
           className="w-full p-2 border border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600"
           placeholder="Ví dụ: 150"
+          min="0"
+          step="0.1"
         />
       </div>
 
       <button
         onClick={handleCalculate}
-        className="btn-primary w-full mb-4"
+        className="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded transition-colors mb-4"
       >
         Tính toán
       </button>
 
       {error && <p className="text-red-500 mb-4">{error}</p>}
 
-      {result !== null && solarResult !== null && (
+      {evnCostPerPerson !== null && anhTrogCostPerPerson !== null && savings !== null && (
         <div className="mt-4 space-y-4">
           <div className="p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
             <h3 className="font-bold mb-2">Khi sử dụng EVN:</h3>
             <p>
-              Tổng tiền điện phải trả:{' '}
+              Tiền điện mỗi người phải trả:{' '}
               <span className="font-bold">
-                {result.toLocaleString('vi-VN')} VND
+                {evnCostPerPerson.toLocaleString('vi-VN')} VND
               </span>
+            </p>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+              (Tổng {kWh} kWh / 8 người × 3,500 VND)
             </p>
           </div>
 
           <div className="p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
             <h3 className="font-bold mb-2">Khi sử dụng Ánh Trọ:</h3>
             <p>
-              Tổng tiền điện phải trả:{' '}
+              Tiền điện mỗi người phải trả:{' '}
               <span className="font-bold">
-                {solarResult.toLocaleString('vi-VN')} VND
+                {anhTrogCostPerPerson.toLocaleString('vi-VN')} VND
+              </span>
+            </p>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+              (Tổng {kWh} kWh / 8 người × 3,000 VND)
+            </p>
+          </div>
+
+          <div className="p-4 bg-green-100 dark:bg-green-900/30 rounded-lg">
+            <h3 className="font-bold mb-2">Lợi ích:</h3>
+            <p>
+              Mỗi người tiết kiệm được:{' '}
+              <span className="font-bold text-green-600">
+                {savings.toLocaleString('vi-VN')} VND
               </span>
             </p>
             <p className="mt-2">
-              Tiết kiệm được:{' '}
+              Cả nhà trọ tiết kiệm:{' '}
               <span className="font-bold text-green-600">
-                {(- result + solarResult).toLocaleString('vi-VN')} VND
+                {(savings * 8).toLocaleString('vi-VN')} VND
               </span>
             </p>
           </div>
